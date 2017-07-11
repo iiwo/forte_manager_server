@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  pool: 1
+  port: 5432
+
+development:
+  <<: *default
+  database: <%= ENV['DATABASE_NAME'] %>
+
+test:
+  <<: *default
+  pool: 10
+  database: <%= "#{ENV['TEST_DATABASE_NAME']}#{ENV['TEST_ENV_NUMBER']}" %>
+
+production: &production
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
+  pool: <%= ENV['DB_POOL'] %>
+
+staging:
+  <<: *production
